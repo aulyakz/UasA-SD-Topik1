@@ -1,0 +1,37 @@
+{%extends 'admin/layout.html'%}
+{%block content%}
+<div class="container ">
+    <h3 class="mb-4">Tambah Barang</h3>
+    <form action="/admin/form-tambah-barang" method="POST">
+      <div class="mb-3">
+        <label for="nama" class="form-label">Nama Barang</label>
+        <input type="text" class="form-control" id="nama" name="nama" required>
+      </div>
+      <div class="mb-3">
+        <label for="harga" class="form-label">Harga</label>
+        <input type="number" class="form-control" id="harga" name="harga" required>
+      </div>
+      <div class="mb-3">
+        <label for="stok" class="form-label">Stok</label>
+        <input type="number" class="form-control" id="stok" name="stok" required>
+      </div>
+      <div class="mb-3">
+        <label for="kategori" class="form-label">Kategori</label>
+        <select class="form-select" id="kategori" name="kategori" required>
+          <option value="">-- Pilih Kategori --</option>
+          <option value="Elektronik">Elektronik</option>
+          <option value="Pakaian">Pakaian</option>
+          <option value="Alat Tulis">Alat Tulis</option>
+          <option value="Bahan Pokok">Bahan Pokok</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="deskripsi" class="form-label">Deskripsi</label>
+        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
+  </div>
+  
+{%endblock%}
