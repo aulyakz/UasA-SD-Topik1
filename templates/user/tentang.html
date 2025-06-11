@@ -1,13 +1,13 @@
 {% extends 'user/layout.html' %} {% block isi %}
 
 <!-- Hero Section -->
-<div class="container py-5" style="max-width: 1000px">
+<div class="container py-5 mt-5" style="max-width: 1000px">
   <div class="text-center">
     <h1 class="fw-bold mb-4" style="font-size: 3rem; font-family: 'Orbitron', sans-serif; color: #212529; animation: fadeSlideIn 1s ease-out">Assalamualaikum Wr.Wb.</h1>
     <p class="lead text-muted mb-5" style="font-size: 1.3rem; max-width: 800px; margin: 0 auto; animation: fadeSlideIn 1.2s ease-out">
       This is our final assignment website for the <strong>Data Structure</strong> course with lecturer <strong>Ahmad Fauzi, M.Ti.</strong> Web programming connected to <strong>Database</strong>.
     </p>
-    <img src="{{ url_for('static', filename='task illustration.png') }}" class="img-fluid rounded shadow-sm" style="max-height: 400px; animation: fadeZoomIn 1.5s ease-out" />
+    <img src="{{ url_for('static', filename='task illustration.png') }}" class="img-fluid rounded shadow-sm tentang-img" style="max-height: 400px; animation: fadeZoomIn 1.5s ease-out" />
   </div>
 </div>
 
@@ -43,6 +43,38 @@
     transform: translateY(-2px);
     background-color: #e6a93c;
     color: #fff;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 991.98px) {
+    .container.py-5.mt-5 {
+      margin-top: 5.5rem !important;
+    }
+    .tentang-img {
+      max-height: 260px !important;
+    }
+    .text-center h1 {
+      font-size: 2.1rem !important;
+    }
+    .text-center p {
+      font-size: 1.05rem !important;
+    }
+  }
+  @media (max-width: 575.98px) {
+    .container.py-5.mt-5 {
+      margin-top: 6.5rem !important;
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    .tentang-img {
+      max-height: 180px !important;
+    }
+    .text-center h1 {
+      font-size: 1.3rem !important;
+    }
+    .text-center p {
+      font-size: 0.95rem !important;
+    }
   }
 </style>
 

@@ -1,15 +1,10 @@
-{% extends 'user/layout.html' %}
-{% block isi %}
+{% extends 'user/layout.html' %} {% block isi %}
 
-<div class="container py-5" style="max-width: 1200px;">
+<div class="container py-5 mt-5" style="max-width: 1200px">
   <!-- Section Header -->
   <div class="text-center mb-5">
-    <h2 class="fw-bold" style="font-size: 2.8rem; color: #212529; font-family: 'Orbitron', sans-serif; animation: fadeSlideIn 1s ease-out;">
-      Get in Touch with Us
-    </h2>
-    <p class="lead text-muted" style="max-width: 700px; margin: 0 auto; animation: fadeSlideIn 1.2s ease-out;">
-      Connect with our team on Instagram. Follow us for updates, events, and more from SMA Garuda.
-    </p>
+    <h2 class="fw-bold" style="font-size: 2.8rem; color: #212529; font-family: 'Orbitron', sans-serif; animation: fadeSlideIn 1s ease-out">Get in Touch with Us</h2>
+    <p class="lead text-muted" style="max-width: 700px; margin: 0 auto; animation: fadeSlideIn 1.2s ease-out">Connect with our team on Instagram. Follow us for updates, events, and more from SMA Garuda.</p>
   </div>
 
   <!-- Contact Cards -->
@@ -19,7 +14,7 @@
       <div class="card border-0 shadow-sm text-center h-100 contact-card">
         <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
           <a href="https://instagram.com/fdkbr._" target="_blank" class="text-decoration-none text-dark">
-            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #e1306c"></i>
             <h5 class="fw-bold">@fdkbr._</h5>
           </a>
         </div>
@@ -31,7 +26,7 @@
       <div class="card border-0 shadow-sm text-center h-100 contact-card">
         <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
           <a href="https://instagram.com/ulyaakz_" target="_blank" class="text-decoration-none text-dark">
-            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #e1306c"></i>
             <h5 class="fw-bold">@ulyaakz_</h5>
           </a>
         </div>
@@ -43,7 +38,7 @@
       <div class="card border-0 shadow-sm text-center h-100 contact-card">
         <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
           <a href="https://instagram.com/wapfa._" target="_blank" class="text-decoration-none text-dark">
-            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #e1306c"></i>
             <h5 class="fw-bold">@wapfa._</h5>
           </a>
         </div>
@@ -76,7 +71,7 @@
 
   .contact-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   }
 
   .contact-card i {
@@ -94,6 +89,12 @@
 
   .contact-card:hover h5 {
     color: #e6a93c;
+  }
+
+  @media (max-width: 991.98px) {
+    .container.py-5.mt-5 {
+      margin-top: 5.5rem !important;
+    }
   }
 </style>
 

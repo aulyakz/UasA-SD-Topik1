@@ -1,5 +1,5 @@
-{%extends 'admin/layout.html'%} {%block content%}
-<div class="container">
+{% extends 'admin/layout.html' %} {% block content %}
+<div class="container pt-5 pt-md-4">
   <h2 class="mb-4">Dashboard</h2>
 
   <div class="row">
@@ -43,8 +43,6 @@
   </div>
 </div>
 
-<!-- Tambahkan Bootstrap Icons dan efek hover -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 <style>
   .hover-card {
     transition: transform 0.2s, box-shadow 0.2s;
@@ -56,4 +54,4 @@
     z-index: 2;
   }
 </style>
-{%endblock%}
+{% endblock %}

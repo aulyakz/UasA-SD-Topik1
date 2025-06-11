@@ -20,6 +20,7 @@
         overflow-x: hidden;
         opacity: 0;
         animation: fadeIn 1s ease-out forwards;
+        padding-top: 70px;
       }
 
       @keyframes fadeIn {
@@ -34,8 +35,10 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         padding: 1rem 2rem;
         font-weight: 600;
-        position: sticky;
+        position: fixed; /* Ubah dari sticky ke fixed agar selalu di atas */
         top: 0;
+        left: 0;
+        width: 100%;
         z-index: 999;
         transition: background-color 0.3s ease, box-shadow 0.3s ease;
       }
@@ -154,7 +157,9 @@
               <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item dropdown d-flex align-items-center">
-              <a class="nav-link dropdown-toggle {% if request.path == '/tentang' or request.path == '/sekolah' %}active{% endif %}" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> About <i class="bi bi-caret-down-fill ms-0" style="font-size: 1rem; margin-left: -2px"></i></a>
+              <a class="nav-link dropdown-toggle {% if request.path == '/tentang' or request.path == '/sekolah' %}active{% endif %}" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                About <i class="bi bi-caret-down-fill ms-0" style="font-size: 1rem; margin-left: -2px"></i
+              ></a>
               <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
                 <li>
                   <a class="dropdown-item {% if request.path == '/sekolah' %}active{% endif %}" href="/sekolah"> <i class="bi bi-building me-2"></i> Sekolah </a>
