@@ -1,0 +1,53 @@
+{%extends 'admin/layout.html'%}
+{%block content%}
+<div class="container ">
+    <h3 class="mb-4">Edit Guru</h3>
+    <form action="/admin/form-edit-guru/{{db_guru[0]}}" method="POST">
+      <div class="mb-3">
+        <label for="nip" class="form-label">NIP</label>
+        <input type="number" class="form-control" id="nip" name="nip" value="{{db_guru[1]}}" required>
+      </div>
+      <div class="mb-3">
+        <label for="nama" class="form-label">Nama</label>
+        <input type="text" class="form-control" id="nama" name="nama" value="{{db_guru[2]}}" required>
+      </div>
+      <div class="mb-3">
+        <label for="jeniskelamin" class="form-label">Jenis Kelamin</label>
+        <select class="form-select" id="jeniskelamin" name="jeniskelamin" required>
+        <option value="{{db_guru[3]}}">{{db_guru[3]}}</option>
+        <option value="Laki-Laki">Laki-Laki</option>
+        <option value="Perempuan">Perempuan</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="golpangkat" class="form-label">Gol Pangkat</label>
+        <select class="form-select" id="golpangkat" name="golpangkat" required>
+        <option value="{{db_guru[4]}}">{{db_guru[4]}}</option>
+        <option value="III/a">III/a, Penata Muda</option>
+        <option value="III/b">III/b, Penata Muda Tingkat l</option>
+        <option value="III/c">III/c, Penata</option>
+        <option value="III/d">III/d, Penata Tingkat l</option>
+        <option value="IV/a">IV/a, Pembina</option> 
+        <option value="IV/b">IV/b, Pembina Tingkat l</option>
+        <option value="IV/c">IV/c, Pembina Utama Muda</option>
+        <option value="IV/d">IV/d, Pembina Utama Madya</option>
+        <option value="IV/e">IV/e, Pembina Utama</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="tempatlahir" class="form-label">Tempat Lahir</label>
+        <input type="text" class="form-control" id="tempatlahir" name="tempatlahir" value="{{db_guru[5]}}" required>
+      </div>
+      <div class="mb-3">
+        <label for="tanggallahir" class="form-label">Tanggal Lahir</label>
+        <input type="date" class="form-control" id="tanggallahir" name="tanggallahir" value="{{db_guru[6]}}" required>
+      </div>
+      <div class="mb-3">
+        <label for="alamat" class="form-label">Alamat</label>
+        <input type="text" class="form-control" id="alamat" name="alamat" value="{{db_guru[7]}}" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Simpan</button>
+    </form>
+  </div>
+
+{%endblock%}

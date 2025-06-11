@@ -1,0 +1,46 @@
+{%extends 'admin/layout.html'%} {%block content%}
+<div class="container">
+  <h2 class="mb-4">Kelola Guru</h2>
+
+  <!-- Tombol Tambah -->
+  <a class="btn btn-primary mb-3" href="/admin/form-tambah-guru">+ Tambah Guru</a>
+
+  <!-- Tabel -->
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>No</th>
+        <th>NIP</th>
+        <th>Nama</th>
+        <th>Jenis Kelamin</th>
+        <th>Gol/Pangkat</th>
+        <th>Tempat Lahir</th>
+        <th>Tanggal Lahir</th>
+        <th>Alamat</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for isi in hasil %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>{{isi[1]}}</td>
+        <td>{{isi[2]}}</td>
+        <td>{{isi[3]}}</td>
+        <td>{{isi[4]}}</td>
+        <td>{{isi[5]}}</td>
+        <td>{{isi[6]}}</td>
+        <td>{{isi[7]}}</td>
+        <td>
+          <a href="/admin/form-edit-guru/{{isi[0]}}" class="btn btn-sm btn-warning">Edit</a>
+          <form action="/admin/hapus-guru/{{isi[0]}}" method="POST" style="display: inline" onsubmit="return confirm('Yakin ingin menghapus guru ini?');">
+            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+          </form>
+        </td>
+      </tr>
+
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}

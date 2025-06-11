@@ -2,11 +2,27 @@ from flask import Flask, render_template, request, redirect, flash, session
 from flaskext.mysql import MySQL
 app = Flask(__name__)
 app.secret_key = 'rahasia'
-db=MySQL(host="localhost", user="root", passwd="", db="dbtokoa")
+db=MySQL(host="localhost", user="root", passwd="", db="dbms")
 db.init_app(app)
 
 @app.route('/')
 def index():
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT COUNT(*) FROM user")
+    jumlah_user = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_guru")
+    jumlah_guru = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_murid")
+    jumlah_murid = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_mapel")
+    jumlah_mapel = cursor.fetchone()[0]
+    return render_template(
+        'user/index.html',
+        jumlah_user=jumlah_user,
+        jumlah_guru=jumlah_guru,
+        jumlah_murid=jumlah_murid,
+        jumlah_mapel=jumlah_mapel
+    )
     return render_template('user/index.html')
 
 
@@ -59,6 +75,10 @@ def tentang():
 def kontak():
     return render_template('user/kontak.html')
 
+@app.route('/sekolah')
+def sekolah():
+    return render_template('user/sekolah.html')
+
 
 #  admin
 
@@ -66,32 +86,55 @@ def kontak():
 def home():
     if 'user' not in session:
         return redirect('/login')
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT COUNT(*) FROM user")
+    jumlah_user = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_guru")
+    jumlah_guru = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_murid")
+    jumlah_murid = cursor.fetchone()[0]
+    cursor.execute("SELECT COUNT(*) FROM db_mapel")
+    jumlah_mapel = cursor.fetchone()[0]
+    return render_template(
+        'admin/index.html',
+        jumlah_user=jumlah_user,
+        jumlah_guru=jumlah_guru,
+        jumlah_murid=jumlah_murid,
+        jumlah_mapel=jumlah_mapel
+    )
     return render_template('admin/index.html')
 
-@app.route('/admin/admin-kelola-barang')
+
+@app.route('/admin/admin-guru')
 def kelolabarang():
+    if 'user' not in session:
+        return redirect('/login')
     data=[]
     try:
         cursor = db.get_db().cursor()
-        cursor.execute("SELECT * FROM barang")
+        cursor.execute("SELECT * FROM db_guru")
         data = cursor.fetchall()
     except Exception as e:
         flash(f"Gagal mengambil data: {e}", "danger")
-    return render_template('admin/barang.html', hasil=data)
+    return render_template('admin/guru.html', hasil=data)
 
 
-@app.route('/admin/form-tambah-barang', methods=['GET', 'POST'])
+@app.route('/admin/form-tambah-guru', methods=['GET', 'POST'])
 def formbarang():
+    if 'user' not in session:
+        return redirect('/login')
     if request.method == 'POST':
+        nip = request.form['nip']
         nama = request.form['nama']
-        harga = request.form['harga']
-        stok = request.form['stok']
-        kategori = request.form['kategori']
-        deskripsi = request.form['deskripsi']
+        jeniskelamin = request.form['jeniskelamin']
+        golpangkat = request.form['golpangkat']
+        tempatlahir = request.form['tempatlahir']
+        tanggallahir = request.form['tanggallahir']
+        alamat= request.form['alamat']
         try:
             cursor = db.get_db().cursor()
-            sql = "INSERT INTO barang (nama, harga, stok, kategori, deskripsi) VALUES (%s, %s, %s, %s, %s)"
-            val = (nama, harga, stok, kategori, deskripsi)
+            sql = "INSERT INTO db_guru (nip, nama, jeniskelamin, golpangkat, tempatlahir, tanggallahir, alamat) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (nip, nama, jeniskelamin, golpangkat, tempatlahir, tanggallahir, alamat)
             print(val)
             cursor.execute(sql, val)
             db.get_db().commit()
@@ -99,27 +142,31 @@ def formbarang():
             flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
         
 
-        flash("Data barang berhasil ditambahkan!", "success")
-        return redirect('/admin/admin-kelola-barang')
-    return render_template('admin/formbarang.html')
+        flash("Data guru berhasil ditambahkan!", "success")
+        return redirect('/admin/admin-guru')
+    return render_template('admin/formguru.html')
 
 
-@app.route('/admin/form-edit-barang/<id>', methods=['GET', 'POST'])
+@app.route('/admin/form-edit-guru/<id>', methods=['GET', 'POST'])
 def formeditbarang(id):
+    if 'user' not in session:
+        return redirect('/login')
     if request.method == 'POST':
+        nip = request.form['nip']
         nama = request.form['nama']
-        harga = request.form['harga']
-        stok = request.form['stok']
-        kategori = request.form['kategori']
-        deskripsi = request.form['deskripsi']
+        jeniskelamin = request.form['jeniskelamin']
+        golpangkat = request.form['golpangkat']
+        tempatlahir = request.form['tempatlahir']
+        tanggallahir = request.form['tanggallahir']
+        alamat = request.form['alamat']
         try:
             cursor = db.get_db().cursor()
             sql = """
-                UPDATE barang
-                SET nama=%s, harga=%s, stok=%s, kategori=%s, deskripsi=%s
+                UPDATE db_guru
+                SET nip=%s, nama=%s, jeniskelamin=%s, golpangkat=%s, tempatlahir=%s, tanggallahir=%s, alamat=%s
                 WHERE id=%s
             """
-            val = (nama, harga, stok, kategori, deskripsi,id)
+            val = (nip, nama, jeniskelamin, golpangkat, tempatlahir, tanggallahir, alamat, id)
             print(val)
             cursor.execute(sql, val)
             db.get_db().commit()
@@ -127,47 +174,239 @@ def formeditbarang(id):
             flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
         
 
-        flash("Data barang berhasil diupdate!", "success")
-        return redirect('/admin/admin-kelola-barang')
+        flash("Data guru berhasil diupdate!", "success")
+        return redirect('/admin/admin-guru')
     data=[]
     try:
         cursor = db.get_db().cursor()
-        cursor.execute("SELECT * FROM barang where id=%s",(id))
+        cursor.execute("SELECT * FROM db_guru where id=%s",(id))
         data = cursor.fetchone()
     except Exception as e:
         flash(f'Gagal mengambil data: {e}', 'danger')
-        return redirect('/admin/admin-kelola-barang')
-    return render_template('admin/formeditbarang.html', barang=data)
+        return redirect('/admin/admin-guru')
+    return render_template('admin/formeditguru.html', db_guru=data)
 
 
-@app.route('/admin/hapus-barang/<int:id>', methods=['POST'])
+@app.route('/admin/hapus-guru/<int:id>', methods=['POST'])
 def hapus_barang(id):
+    if 'user' not in session:
+        return redirect('/login')
     try:
         cursor = db.get_db().cursor()
-        cursor.execute("DELETE FROM barang WHERE id = %s", (id,))
+        cursor.execute("DELETE FROM db_guru WHERE id = %s", (id))
         db.get_db().commit()
-        flash("Barang berhasil dihapus.", "success")
+        flash("Dara Guru berhasil dihapus.", "success")
     except Exception as e:
-        flash(f"Gagal menghapus barang: {e}", "danger")
+        flash(f"Gagal menghapus guru: {e}", "danger")
    
 
-    return redirect('/admin/admin-kelola-barang')
+    return redirect('/admin/admin-guru')
 
 
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect('/login')
+@app.route('/admin/admin-murid')
+def kelolamurid():
+    if 'user' not in session:
+        return redirect('/login')
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM db_murid")
+        data = cursor.fetchall()
+    except Exception as e:
+        flash(f"Gagal mengambil data: {e}", "danger")
+    return render_template('admin/murid.html', hasil=data)
+
+
+@app.route('/admin/form-tambah-murid', methods=['GET', 'POST'])
+def formmurid():
+    if 'user' not in session:
+        return redirect('/login')
+    if request.method == 'POST':
+        nisn = request.form['nisn']
+        nama = request.form['nama']
+        jeniskelamin = request.form['jeniskelamin']
+        kelas = request.form['kelas']
+        tempatlahir = request.form['tempatlahir']
+        tanggallahir = request.form['tanggallahir']
+        namaibu = request.form['namaibu']
+        try:
+            cursor = db.get_db().cursor()
+            sql = "INSERT INTO db_murid (nisn, nama, jeniskelamin, kelas, tempatlahir, tanggallahir, namaibu) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (nisn, nama, jeniskelamin, kelas, tempatlahir, tanggallahir, namaibu)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data murid berhasil ditambahkan!", "success")
+        return redirect('/admin/admin-murid')
+    return render_template('admin/formmurid.html')
+
+
+@app.route('/admin/form-edit-murid/<id>', methods=['GET', 'POST'])
+def formeditmurid(id):
+    if 'user' not in session:
+        return redirect('/login')
+    if request.method == 'POST':
+        nisn = request.form['nisn']
+        nama = request.form['nama']
+        jeniskelamin = request.form['jeniskelamin']
+        kelas = request.form['kelas']
+        tempatlahir = request.form['tempatlahir']
+        tanggallahir = request.form['tanggallahir']
+        namaibu = request.form['namaibu']
+        try:
+            cursor = db.get_db().cursor()
+            sql = """
+                UPDATE db_murid
+                SET nisn=%s, nama=%s, jeniskelamin=%s, kelas=%s, tempatlahir=%s, tanggallahir=%s, namaibu=%s
+                WHERE id=%s
+            """
+            val = (nisn, nama, jeniskelamin, kelas, tempatlahir, tanggallahir, namaibu, id)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data murid berhasil diupdate!", "success")
+        return redirect('/admin/admin-murid')
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM db_murid where id=%s",(id))
+        data = cursor.fetchone()
+    except Exception as e:
+        flash(f'Gagal mengambil data: {e}', 'danger')
+        return redirect('/admin/admin-murid')
+    return render_template('admin/formeditmurid.html', db_murid=data)
+
+
+@app.route('/admin/hapus-murid/<int:id>', methods=['POST'])
+def hapus_murid(id):
+    if 'user' not in session:
+        return redirect('/login')
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("DELETE FROM db_murid WHERE id = %s", (id))
+        db.get_db().commit()
+        flash("murid berhasil dihapus.", "success")
+    except Exception as e:
+        flash(f"Gagal menghapus murid: {e}", "danger")
+   
+    return redirect('/admin/admin-mapel')
+
+@app.route('/admin/admin-mapel')
+def kelolamapel():
+    if 'user' not in session:
+        return redirect('/login')
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM db_mapel")
+        data = cursor.fetchall()
+    except Exception as e:
+        flash(f"Gagal mengambil data: {e}", "danger")
+    return render_template('admin/mapel.html', hasil=data)
+
+
+@app.route('/admin/form-tambah-mapel', methods=['GET', 'POST'])
+def formmapel():
+    if 'user' not in session:
+        return redirect('/login')
+    if request.method == 'POST':
+        kode = request.form['kode']
+        mapel = request.form['mapel']
+        jam = request.form['jam']
+        hari = request.form['hari']
+        kelas = request.form['kelas']
+        guru = request.form['guru']
+        try:
+            cursor = db.get_db().cursor()
+            sql = "INSERT INTO db_mapel (kode, mapel, jam, hari, kelas, guru) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (kode, mapel, jam, hari, kelas, guru)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data Mapel berhasil ditambahkan!", "success")
+        return redirect('/admin/admin-mapel')
+    return render_template('admin/formmapel.html')
+
+
+@app.route('/admin/form-edit-mapel/<id>', methods=['GET', 'POST'])
+def formeditmapel(id):
+    if 'user' not in session:
+        return redirect('/login')
+    if request.method == 'POST':
+        kode = request.form['kode']
+        mapel = request.form['mapel']
+        jam = request.form['jam']
+        hari = request.form['hari']
+        kelas = request.form['kelas']
+        guru = request.form['guru']
+        try:
+            cursor = db.get_db().cursor()
+            sql = """
+                UPDATE db_mapel
+                SET kode=%s, mapel=%s, jam=%s, hari=%s, kelas=%s, guru=%s
+                WHERE id=%s
+            """
+            val= (kode, mapel, jam, hari, kelas, guru, id)
+            print(val)
+            cursor.execute(sql, val)
+            db.get_db().commit()
+        except Exception as e:
+            flash(f'Terjadi kesalahan saat menyimpan data: {e}', 'danger')
+        
+
+        flash("Data Mapel berhasil diupdate!", "success")
+        return redirect('/admin/admin-mapel')
+    data=[]
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("SELECT * FROM db_mapel where id=%s",(id))
+        data = cursor.fetchone()
+    except Exception as e:
+        flash(f'Gagal mengambil data: {e}', 'danger')
+        return redirect('/admin/admin-mapel')
+    return render_template('admin/formeditmapel.html', db_mapel=data)
+
+
+@app.route('/admin/hapus-mapel/<int:id>', methods=['POST'])
+def hapus_mapel(id):
+    if 'user' not in session:
+        return redirect('/login')
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("DELETE FROM db_mapel WHERE id = %s", (id))
+        db.get_db().commit()
+        flash("Mapel berhasil dihapus.", "success")
+    except Exception as e:
+        flash(f"Gagal menghapus mapel: {e}", "danger")
+   
+
+    return redirect('/admin/admin-mapel')
+
+
 
 
 
 
 @app.route('/admin/admin-kelola-pengguna')
 def kelolapengguna():
+    if 'user' not in session:
+        return redirect('/login')
     data=[]
     try:
         cursor = db.get_db().cursor()
-        cursor.execute("SELECT * FROM barang")
+        cursor.execute("SELECT * FROM user")
         data = cursor.fetchall()
     except Exception as e:
         flash(f"Gagal mengambil data: {e}", "danger")
@@ -177,6 +416,8 @@ def kelolapengguna():
 
 @app.route('/admin/admin-kelola-user')
 def kelolauser():
+    if 'user' not in session:
+        return redirect('/login')
     data=[]
     try:
         cursor = db.get_db().cursor()
@@ -189,6 +430,8 @@ def kelolauser():
 
 @app.route('/admin/form-tambah-user', methods=['GET', 'POST'])
 def formuser():
+    if 'user' not in session:
+        return redirect('/login')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -210,6 +453,8 @@ def formuser():
 
 @app.route('/admin/form-edit-user/<id>', methods=['GET', 'POST'])
 def formedituser(id):
+    if 'user' not in session:
+        return redirect('/login')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -241,6 +486,10 @@ def formedituser(id):
         return redirect('/admin/admin-kelola-user')
     return render_template('admin/formedituser.html', user=data)
 
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/login')
 
 if __name__ == '__main__':
     app.run(debug=True)

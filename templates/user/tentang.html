@@ -1,8 +1,49 @@
-{%extends 'user/layout.html'%} {%block isi%}
-<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh">
+{% extends 'user/layout.html' %} {% block isi %}
+
+<!-- Hero Section -->
+<div class="container py-5" style="max-width: 1000px">
   <div class="text-center">
-    <div style="font-size:2.2rem; font-weight:bold;">Assalamualaikum Wr.Wb.</div>
-    <div style="font-size:1.5rem; margin-top:1rem;">Ini adalah web tugas akhir kami pada mata kuliah Struktur Data dengan dosen pengampu Ahmad Fauzi, M.Ti. pemograman web terkoneksi dengan SQL.</div>
+    <h1 class="fw-bold mb-4" style="font-size: 3rem; font-family: 'Orbitron', sans-serif; color: #212529; animation: fadeSlideIn 1s ease-out">Assalamualaikum Wr.Wb.</h1>
+    <p class="lead text-muted mb-5" style="font-size: 1.3rem; max-width: 800px; margin: 0 auto; animation: fadeSlideIn 1.2s ease-out">
+      This is our final assignment website for the <strong>Data Structure</strong> course with lecturer <strong>Ahmad Fauzi, M.Ti.</strong> Web programming connected to <strong>Database</strong>.
+    </p>
+    <img src="{{ url_for('static', filename='task illustration.png') }}" class="img-fluid rounded shadow-sm" style="max-height: 400px; animation: fadeZoomIn 1.5s ease-out" />
   </div>
 </div>
-{%endblock%}
+
+<!-- Animations & Styling -->
+<style>
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeZoomIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .cta-card .btn {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .cta-card .btn:hover {
+    transform: translateY(-2px);
+    background-color: #e6a93c;
+    color: #fff;
+  }
+</style>
+
+{% endblock %}

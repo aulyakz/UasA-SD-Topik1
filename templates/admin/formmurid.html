@@ -1,0 +1,52 @@
+{%extends 'admin/layout.html'%} {%block content%}
+<div class="container">
+  <h3 class="mb-4">Tambah Murid</h3>
+  <form action="/admin/form-tambah-murid" method="POST">
+    <div class="mb-3">
+      <label for="nisn" class="form-label">NISN</label>
+      <input type="number" class="form-control" id="nisn" name="nisn" required />
+    </div>
+    <div class="mb-3">
+      <label for="nama" class="form-label">Nama</label>
+      <input type="text" class="form-control" id="nama" name="nama" required />
+    </div>
+    <div class="mb-3">
+      <label for="jeniskelamin" class="form-label">Jenis Kelamin</label>
+      <select class="form-select" id="jeniskelamin" name="jeniskelamin" required>
+        <option value="">-- Pilih Jenis Kelamin --</option>
+        <option value="Laki-Laki">Laki-Laki</option>
+        <option value="Perempuan">Perempuan</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="kelas" class="form-label">Kelas</label>
+      <select class="form-select" id="kelas" name="kelas" required>
+        <option value="">-- Pilih Kelas --</option>
+        <option value="IPA 1">IPA 1</option>
+        <option value="IPA 2">IPA 2</option>
+        <option value="IPA 3">IPA 3</option>
+        <option value="IPS 1">IPS 1</option>
+        <option value="IPS 2">IPS 2</option>
+        <option value="IPS 3">IPS 3</option>
+        <option value="Bahasa 1">Bahasa 1</option>
+        <option value="Bahasa 2">Bahasa 2</option>
+        <option value="Bahasa 3">Bahasa 3</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="tempatlahir" class="form-label">Tempat Lahir</label>
+      <input type="text" class="form-control" id="tempatlahir" name="tempatlahir" required />
+    </div>
+    <div class="mb-3">
+      <label for="tanggallahir" class="form-label">Tanggal Lahir</label>
+      <input type="date" class="form-control" id="tanggallahir" name="tanggallahir" required />
+    </div>
+    <div class="mb-3">
+      <label for="namaibu" class="form-label">Nama Ibu</label>
+      <input type="text" class="form-control" id="namaibu" name="namaibu" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </form>
+</div>
+
+{%endblock%}

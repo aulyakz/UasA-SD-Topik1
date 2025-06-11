@@ -1,27 +1,100 @@
-{%extends 'user/layout.html'%}
-{%block isi%}
-<div class="container py-5">
-  <div class="row justify-content-center align-items-center" style="min-height:60vh;">
-    <div class="col-md-4 text-center mb-4 mb-md-0">
-      <a href="https://instagram.com/fdkbr._" target="_blank" style="text-decoration:none; color:inherit;">
-        <i class="bi bi-instagram" style="font-size:2.5rem; vertical-align:middle;"></i>
-        <span style="font-size:2rem; margin-left:10px;">@fdkbr._</span>
-      </a>
+{% extends 'user/layout.html' %}
+{% block isi %}
+
+<div class="container py-5" style="max-width: 1200px;">
+  <!-- Section Header -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold" style="font-size: 2.8rem; color: #212529; font-family: 'Orbitron', sans-serif; animation: fadeSlideIn 1s ease-out;">
+      Get in Touch with Us
+    </h2>
+    <p class="lead text-muted" style="max-width: 700px; margin: 0 auto; animation: fadeSlideIn 1.2s ease-out;">
+      Connect with our team on Instagram. Follow us for updates, events, and more from SMA Garuda.
+    </p>
+  </div>
+
+  <!-- Contact Cards -->
+  <div class="row justify-content-center g-4">
+    <!-- Card 1 -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm text-center h-100 contact-card">
+        <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
+          <a href="https://instagram.com/fdkbr._" target="_blank" class="text-decoration-none text-dark">
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <h5 class="fw-bold">@fdkbr._</h5>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4 text-center mb-4 mb-md-0">
-      <a href="https://instagram.com/ulyaakz_" target="_blank" style="text-decoration:none; color:inherit;">
-        <i class="bi bi-instagram" style="font-size:2.5rem; vertical-align:middle;"></i>
-        <span style="font-size:2rem; margin-left:10px;">@ulyaakz_</span>
-      </a>
+
+    <!-- Card 2 -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm text-center h-100 contact-card">
+        <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
+          <a href="https://instagram.com/ulyaakz_" target="_blank" class="text-decoration-none text-dark">
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <h5 class="fw-bold">@ulyaakz_</h5>
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="col-md-4 text-center">
-      <a href="https://instagram.com/wapfa._" target="_blank" style="text-decoration:none; color:inherit;">
-        <i class="bi bi-instagram" style="font-size:2.5rem; vertical-align:middle;"></i>
-        <span style="font-size:2rem; margin-left:10px;">@wapfa._</span>
-      </a>
+
+    <!-- Card 3 -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm text-center h-100 contact-card">
+        <div class="card-body py-5 d-flex flex-column align-items-center justify-content-center">
+          <a href="https://instagram.com/wapfa._" target="_blank" class="text-decoration-none text-dark">
+            <i class="bi bi-instagram mb-3" style="font-size: 3.5rem; color: #E1306C;"></i>
+            <h5 class="fw-bold">@wapfa._</h5>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 <!-- Bootstrap Icons CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-{%endblock%}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<!-- Animations & Styling -->
+<style>
+  @keyframes fadeSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .contact-card {
+    border-radius: 16px;
+    transition: all 0.3s ease-in-out;
+    background-color: #ffffff;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  }
+
+  .contact-card i {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .contact-card:hover i {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .contact-card h5 {
+    font-size: 1.3rem;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .contact-card:hover h5 {
+    color: #e6a93c;
+  }
+</style>
+
+{% endblock %}
