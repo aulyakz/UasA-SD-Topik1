@@ -23,7 +23,7 @@ def index():
         jumlah_murid=jumlah_murid,
         jumlah_mapel=jumlah_mapel
     )
-    return render_template('user/index.html')
+    # return render_template('user/index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -106,7 +106,7 @@ def home():
 
 
 @app.route('/admin/admin-guru')
-def kelolabarang():
+def kelolaguru():
     if 'user' not in session:
         return redirect('/login')
     data=[]
@@ -120,7 +120,7 @@ def kelolabarang():
 
 
 @app.route('/admin/form-tambah-guru', methods=['GET', 'POST'])
-def formbarang():
+def formguru():
     if 'user' not in session:
         return redirect('/login')
     if request.method == 'POST':
@@ -148,7 +148,7 @@ def formbarang():
 
 
 @app.route('/admin/form-edit-guru/<id>', methods=['GET', 'POST'])
-def formeditbarang(id):
+def formeditguru(id):
     if 'user' not in session:
         return redirect('/login')
     if request.method == 'POST':
@@ -188,7 +188,7 @@ def formeditbarang(id):
 
 
 @app.route('/admin/hapus-guru/<int:id>', methods=['POST'])
-def hapus_barang(id):
+def hapus_guru(id):
     if 'user' not in session:
         return redirect('/login')
     try:
@@ -485,6 +485,21 @@ def formedituser(id):
         flash(f'Gagal mengambil data: {e}', 'danger')
         return redirect('/admin/admin-kelola-user')
     return render_template('admin/formedituser.html', user=data)
+
+@app.route('/admin/hapus-user/<int:id>', methods=['POST'])
+def hapus_user(id):
+    if 'user' not in session:
+        return redirect('/login')
+    try:
+        cursor = db.get_db().cursor()
+        cursor.execute("DELETE FROM user WHERE id = %s", (id))
+        db.get_db().commit()
+        flash("User berhasil dihapus.", "success")
+    except Exception as e:
+        flash(f"Gagal menghapus user: {e}", "danger")
+   
+
+    return redirect('/admin/admin-kelola-user')
 
 @app.route('/logout')
 def logout():
